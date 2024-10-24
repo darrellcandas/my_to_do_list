@@ -1,0 +1,2 @@
+import{a as i,i as l,s as w,P as o,p as s,k as c,r as d,v as n,n as h}from"../lite.js";function v(r){let t,e;return{c(){t=o("svg"),e=o("path"),s(e,"d","M5 8l4 4 4-4z"),s(t,"class","dropdown-arrow svelte-xjn76a"),s(t,"xmlns","http://www.w3.org/2000/svg"),s(t,"width","100%"),s(t,"height","100%"),s(t,"viewBox","0 0 18 18")},m(a,p){c(a,t,p),d(t,e)},p:n,i:n,o:n,d(a){a&&h(t)}}}class m extends i{constructor(t){super(),l(this,t,null,v,w,{})}}export{m as D};
+//# sourceMappingURL=DropdownArrow-CJnk53mM.js.map
