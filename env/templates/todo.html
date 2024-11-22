@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Link to favicon -->
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Link to Google Font (Cinzel Decorative) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Main application container -->
+    <div id="app">
+        <!-- Application header -->
+        <h1>To-Do List</h1>
+        <!-- Navigation -->
+        <nav>
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('todo') }}">To-Do List</a>
+            <a href="{{ url_for('contact') }}">Contact Us</a>
+        </nav>
+        <!-- Color picker for background color -->
+        <label for="bg-color-picker">Background Color:</label>
+        <input type="color" id="bg-color-picker" name="bg-color-picker" value="#b37575">
+        <!-- Color picker for app container color -->
+        <label for="app-color-picker">App Container Color:</label>
+        <input type="color" id="app-color-picker" name="app-color-picker" value="#ec9696">
+        <!-- Color picker for button color -->
+        <label for="button-color-picker">Button Color:</label>
+        <input type="color" id="button-color-picker" name="button-color-picker" value="#28a745">
+        <!-- Input field for new to-do task -->
+        <input type="text" id="new-todo" placeholder="Add a new to-do task">
+        <!-- Dropdown for task priority -->
+        <select id="priority">
+            <option value="low">Low Priority</option>
+            <option value="medium">Medium Priority</option>
+            <option value="high">High Priority</option>
+        </select>
+        <!-- Button to add new to-do task -->
+        <button id="add-button">Add</button>
+        <!-- List to display to-do tasks -->
+        <ul id="todo-list"></ul>
+    </div>
+    <script>
+        // Function to fetch and display to-do tasks
+        async function fetchTodos() {
+            const response = await fetch('/todos');
+            const todos = await response.json();
+            const todoList = document.getElementById('todo-list');
+            todoList.innerHTML = '';
+            todos.forEach(todo => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <input type="checkbox" ${todo.status === 'completed' ? 'checked' : ''} data-id="${todo.id}">
+                    ${todo.task} - Priority: ${todo.priority}
+                    <button class="edit" data-id="${todo.id}"><i class="fas fa-pencil-alt"></i></button>
+                    <button class="delete" data-id="${todo.id}"><i class="fas fa-trash-alt"></i></button>
+                `;
+                todoList.appendChild(li);
+            });
+
+            // Add event listeners for checkboxes, edit buttons, and delete buttons
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', async (event) => {
+                    const id = event.target.getAttribute('data-id');
+                    const status = event.target.checked ? 'completed' : 'pending';
+                    await fetch(`/todos/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ status: status, priority: 'medium' }) // Adjust priority as needed
+                    });
+                    fetchTodos();
+                });
+            });
+
+            document.querySelectorAll('.edit').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const id = event.target.getAttribute('data-id');
+                    const newStatus = prompt("Enter new status (pending/completed):");
+                    const newPriority = prompt("Enter new priority (low/medium/high):");
+                    if (newStatus && newPriority) {
+                        await fetch(`/todos/${id}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ status: newStatus, priority: newPriority })
+                        });
+                        fetchTodos();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.delete').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const id = event.target.getAttribute('data-id');
+                    await fetch(`/todos/${id}`, {
+                        method: 'DELETE'
+                    });
+                    fetchTodos();
+                });
+            });
+        }
+
+        // Function to add a new to-do task
+        async function addTodo() {
+            const newTodo = document.getElementById('new-todo').value;
+            const priority = document.getElementById('priority').value;
+            await fetch('/todos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ task: newTodo, priority: priority })
+            });
+            fetchTodos();
+        }
+
+        // Event listener for the add button
+        document.getElementById('add-button').addEventListener('click', addTodo);
+
+        // Fetch to-do tasks on page load
+        fetchTodos();
+
+        // Function to update background color
+        function updateBackgroundColor() {
+            const bgColor = document.getElementById('bg-color-picker').value;
+            document.body.style.backgroundColor = bgColor;
+        }
+
+        // Function to update app container color
+        function updateAppColor() {
+            const appColor = document.getElementById('app-color-picker').value;
+            document.getElementById('app').style.backgroundColor = appColor;
+        }
+
+        // Function to update button color
+        function updateButtonColor() {
+            const buttonColor = document.getElementById('button-color-picker').value;
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.style.backgroundColor = buttonColor;
+            });
+        }
+
+        // Event listeners for color pickers
+        document.getElementById('bg-color-picker').addEventListener('input', updateBackgroundColor);
+        document.getElementById('app-color-picker').addEventListener('input', updateAppColor);
+        document.getElementById('button-color-picker').addEventListener('input', updateButtonColor);
+    </script>
+</body>
+
+</html>
