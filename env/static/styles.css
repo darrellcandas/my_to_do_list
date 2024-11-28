@@ -126,6 +126,25 @@ li button i {
     font-size: 0.9em;
 }
 
+/* Styles for the Gradio interface container */
+#gradio-container {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 300px;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#gradio-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
     #app {
