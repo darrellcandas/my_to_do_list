@@ -140,7 +140,8 @@ iface = gr.TabbedInterface(
 # Route to launch the Gradio interface
 @app.route('/gradio')
 def gradio_interface():
-    return iface.launch(share=True)
+    iface.launch(share=False, inline=False, server_name="0.0.0.0", server_port=7860)
+    return render_template('gradio.html')
 
 # Initialize the database
 init_db()
