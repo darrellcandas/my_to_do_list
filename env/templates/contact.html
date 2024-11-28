@@ -25,10 +25,9 @@
             <a href="{{ url_for('index') }}">Home</a>
             <a href="{{ url_for('todo') }}">To-Do List</a>
             <a href="{{ url_for('contact') }}">Contact Us</a>
-            <a href="{{ url_for('gradio_interface') }}">Gradio Interface</a>
         </nav>
         <!-- Contact form -->
-        <form action="{{ url_for('submit_contact') }}" method="POST">
+        <form action="{{ url_for('submit_contact') }}" method="post">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             <label for="email">Email:</label>

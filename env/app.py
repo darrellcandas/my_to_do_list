@@ -140,17 +140,14 @@ iface = gr.TabbedInterface(
 # Route to launch the Gradio interface
 @app.route('/gradio')
 def gradio_interface():
-    iface.launch(share=False, inline=False, server_name="0.0.0.0", server_port=7860)
-    return render_template('gradio.html')
+    return iface.launch(share=True)
 
 # Initialize the database
 init_db()
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)  # Ensure Flask runs on port 5000
-   
-   
-   
+
     
     
     

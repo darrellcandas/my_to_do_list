@@ -8,7 +8,6 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    font-size: 1rem; /* Scalable font size */
 }
 
 /* App Container Styles */
@@ -26,7 +25,6 @@ body {
 h1 {
     font-size: 3em;
     margin-bottom: 25px;
-    color: #333;
 }
 
 /* Input Styles */
@@ -37,11 +35,6 @@ input[type="text"], input[type="date"], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1.2em;
-}
-
-input[type="text"]:focus, input[type="date"]:focus, select:focus {
-    border-color: #007bff;
-    outline: none;
 }
 
 /* Color Picker Styles */
@@ -64,12 +57,10 @@ button {
     cursor: pointer;
     font-size: 1.2em;
     margin-bottom: 15px;
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for hover effect */
 }
 
 button:hover {
     background-color: #218838;
-    transform: scale(1.05); /* Slightly enlarge the button on hover */
 }
 
 /* List Styles */
@@ -105,7 +96,6 @@ li button {
     border-radius: 4px;
     cursor: pointer;
     font-size: 1em;
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for hover effect */
 }
 
 li button.update {
@@ -114,35 +104,14 @@ li button.update {
 
 li button.update:hover {
     background-color: #0056b3;
-    transform: scale(1.05); /* Slightly enlarge the button on hover */
 }
 
 li button.delete:hover {
     background-color: #c82333;
-    transform: scale(1.05); /* Slightly enlarge the button on hover */
 }
 
 li button i {
     font-size: 0.9em;
-}
-
-/* Styles for the Gradio interface container */
-#gradio-container {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    width: 300px;
-    height: 200px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-#gradio-container iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
 }
 
 /* Media Queries for Responsiveness */
@@ -202,7 +171,6 @@ li button i {
         padding: 5px 8px;
     }
 }
-
 
 
 
